@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
    
 </head>
-<body style="margin: 0; font-size: 10vh;">
+<body style="margin: 0; font-size: 10vh; width:100%">
 
 
     
