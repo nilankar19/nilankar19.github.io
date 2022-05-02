@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="scroll-behavior: smooth;" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +11,9 @@
 </head>
 <body style="margin: 0; font-size: 10vh;width: 100%;">
 
-
+    <img id="hello-w" style=" display: block; position: relative; width:100%;height: 100%;" src="helloworld.jpg" alt="hello">
     
-    <div style=" margin: 0; background-image: url(ss.jpg);background-repeat: no-repeat;background-size: cover;background-position: center;   width: 100%; height: 100%; ">
+    <div id="b-img" style=" display: none; margin: 0; background-image: url(ss.jpg);background-repeat: no-repeat;background-size: cover;background-position: center;   width: 100%; height:100%; ">
         <div style="position: relative; height: 45px;">
         <p style="margin:9px 0px 0px 4px; padding: 0; margin-bottom: 0; position: absolute;  color:rgb(255, 255, 255); font-size:5vh;font-family: 'Syncopate', sans-serif;">nilankar</p>
         </div>
@@ -46,7 +46,7 @@
     <div style=" position: relative; width: 100%;">
 
     <hr style="margin-top: 0;margin-bottom: 0; width: 100%;">
-    <h5 style="margin-left: 2%; margin-top: 0;margin-bottom: 0; font-size: 3vh;">youtube debug info</h2>
+    <h5 style="margin-left: 2%; margin-top: 0;margin-bottom: 0; font-size: 3vh; transform: translateY(10%) ; animation: t 4s steps(10) 1s normal both; ">youtube debug info</h2>
         <hr style="margin-top: 0;margin-bottom: 0; width: 100%;">
     <div style=" margin:0; font-size: 3vh; " >
         <pre > 
@@ -56,19 +56,36 @@
             </pre>
     </div></div></div>
 
-   <img style=" position: relative; width:100%;height: 100%;" src="helloworld.jpg" alt="hello">
+  
    <div style="  display:flex; flex-direction: row;justify-content: center; position: relative; width: 100%;height: 10px; z-index: 3289;  ">
     <a href="https://twitter.com/Nilankar_?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Nilankar_</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div> 
 
  <script>
+setTimeout(()=>{ 
+                
+                document.querySelector("#hello-w").style.display="none";
+                document.querySelector("#b-img").style.display="block";
+                    
+            },3000)    
+
+
+
+
         function runtimefunc(x){
             if(x.matches){
+                document.querySelector("#b-img").style.display="none";
                 document.querySelector(".text-area").style.display="none";
                 document.querySelector("#gitlink").style.fontSize="3vh";
                 document.querySelector("#gitlink").style.margin="-12px 0 0 0";
                 document.querySelector("#hrline").style.margin="-4% 0 0 0";
                  document.querySelector("#row-b").style.margin="1% 0 0 0";
+                setTimeout(()=>{ 
+                    document.querySelector("#hello-w").style.display="none";
+                    document.querySelector("#b-img").style.height="600px";
+                document.querySelector("#b-img").style.display="block";
+                    
+            },3000)     
             }
             else {
                 document.querySelector(".text-area").style.display="block";
