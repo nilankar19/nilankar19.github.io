@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">             
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel=preload href= img/bg-1920.jpg as=image imagesrcset="img/bg-1920.jpg 4x" sizes="100vw">
+      <link rel=preload href= img/bg.jpg as=image imagesrcset="img/bg.jpg 4x" sizes="100vw">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
     <title>Nilankar</title>
 </head>
@@ -86,11 +86,11 @@ setTimeout(()=>{
                  document.querySelector("#row-b").style.margin="0% 0 0 0";
                  document.querySelector("#dash").style.fontSize="3vw";
                  document.querySelector("#dashs").style.fontSize="3vw";
+                document.querySelector("#b-img").style.backgroundImage="url(img/bg.jpg)";
                 setTimeout(()=>{ 
                     document.querySelector("#hello-w").style.display="none";
                     document.querySelector("#b-img").style.height="800px";
                     document.querySelector("#b-img").style.display="block";
-                      document.querySelector("#b-img").style.backgroundImage="url(img/bg800px.png)";
                     document.querySelector("#twit-f").style.display="block";
                     
             },3000)     
