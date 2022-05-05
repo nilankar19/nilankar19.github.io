@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">             
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel=preload href= ss.jpg as=image imagesrcset="jpg.png 4x" sizes="100vw">
+      <link rel=preload href= img/bg-1920.jpg as=image imagesrcset="img/bg-1920.jpg 4x" sizes="100vw">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
     <title>Nilankar</title>
 </head>
 <body style="margin: 0; font-size: 10vh;width: 100%;">
 <main>
-    <img id="hello-w" style=" display: block; position: relative; width:100%;height: 100%;" src="helloworld.jpg" alt="hello">
+    <img id="hello-w" style=" display: block; position: relative; width:100%;height: 100%;" src="img/helloworld.jpg" alt="hello">
     
-    <div id="b-img" style=" display: none; margin: 0; background-image: url(ss.jpg);background-repeat: no-repeat;background-size: cover;background-position: center;   width: 100%; height:100%; ">
+    <div id="b-img" style=" display: none; margin: 0; background-image: url(img/bg-1920.jpg);background-repeat: no-repeat;background-size: cover;background-position: center;   width: 100%; height:100%; ">
         <div style="position: absolute; height: 100%;">
         <p style="margin:9px 0px 0px 4px; padding: 0; margin-bottom: 0; position: absolute;  color:rgb(255, 255, 255); font-size:5vh;font-family: 'Syncopate', sans-serif;">nilankar</p>
         </div><br>
@@ -49,7 +49,7 @@
     <div style=" position: relative; width: 100%;">
 
     <hr style="margin-top: 0;margin-bottom: 0; width: 100%;">
-    <h5 style="margin-left: 2%; margin-top: 0;margin-bottom: 0; font-size: 3vh; transform: translateY(10%) ; animation: t 4s steps(10) 1s normal both; ">youtube debug info</h2>
+    <h5 style="margin-left: 2%; margin-top: 0;margin-bottom: 0; font-size: 3vh; transform: translateY(10%) ; animation: t 4s steps(10) 1s normal both; ">updating.......</h2>
         <hr style="margin-top: 0;margin-bottom: 0; width: 100%;">
     <div style=" margin:0; font-size: 3vh; " >
         <pre > 
@@ -60,7 +60,7 @@
     </div></div></div>
 <br>
   
-   <div style="  display:flex; flex-direction: row;justify-content: center; position: relative; width: 100%;height: 10px; z-index: 3289;  ">
+   <div id="twit-f" style=" display:none display:flex; flex-direction: row;justify-content: center; position: relative; width: 100%;height: 10px; z-index: 3289;  ">
     <a href="https://twitter.com/Nilankar_?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Nilankar_</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div> 
 </main>
@@ -89,7 +89,8 @@ setTimeout(()=>{
                 setTimeout(()=>{ 
                     document.querySelector("#hello-w").style.display="none";
                     document.querySelector("#b-img").style.height="800px";
-                document.querySelector("#b-img").style.display="block";
+                    document.querySelector("#b-img").style.display="block";
+                    document.querySelector("#twit-f").style.display="block";
                     
             },3000)     
             }
