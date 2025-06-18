@@ -617,6 +617,12 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+
+            .cursor,
+            .cursor-trail {
+                display: none !important;
+            }
+
             .liquid-nav {
                 padding: 6px;
             }
@@ -640,10 +646,10 @@
                 margin: 10px;
             }
 
-            .projects{
+            .projects {
                 padding: 5%;
             }
-            
+
             .project-carousel {
                 padding: 10px 20px;
             }
@@ -1142,14 +1148,17 @@
             .projects {
                 overflow-x: hidden;
                 padding: 8%;
-                
+
             }
-            .project-card{
+
+            .project-card {
                 overflow-y: scroll;
             }
-           .project-card::after {
-            height: 100vh;
-           }
+
+            .project-card::after {
+                height: 100vh;
+            }
+
             .project-card-gl {
                 min-width: 356px !important;
                 height: 522px;
@@ -1195,7 +1204,7 @@
         </div>
     </section>
 
-  
+
     <!-- desktop screen -->
     <div class="tech-grid"></div>
 
@@ -1325,25 +1334,26 @@
                 <div class="swiper-slide">
                     <div class="project-card ">
                         <div class="project-card-wrapper">
-                        <div class="project-number">01</div>
-                        <h3 class="project-title">Franguinho De Albufeira Restaurant</h3>
-                        <p class="project-description">
-                            A modern digital solution for a Portuguese churrasqueira, featuring a mobile-friendly
-                            landing page, QR-based menu, smart reservation, and admin tools.
-                        </p>
-                        <ul class="project-tech">
-                            <li>✅ Modern UI/UX: Fully responsive design</li>
-                            <li>📅 Smart Reservation System with idle detection</li>
-                            <li>📲 Automated SMS/WhatsApp Booking Confirmations</li>
-                            <li>🛠️ Admin Dashboard for booking & contact management</li>
-                            <li>🧾 Legal Pages: GDPR-compliant setup</li>
-                            <li>📱 QR Menu for contactless experience</li>
-                            <li>🧠 Backend Logic: Action/Loader control flow using Remix</li>
-                        </ul>
-                        <a href="https://franguinhodealbufeira.com/" class="project-link" target="_blank">Visit Website
-                            →</a>
-                           </div>
-                         
+                            <div class="project-number">01</div>
+                            <h3 class="project-title">Franguinho De Albufeira Restaurant</h3>
+                            <p class="project-description">
+                                A modern digital solution for a Portuguese churrasqueira, featuring a mobile-friendly
+                                landing page, QR-based menu, smart reservation, and admin tools.
+                            </p>
+                            <ul class="project-tech">
+                                <li>✅ Modern UI/UX: Fully responsive design</li>
+                                <li>📅 Smart Reservation System with idle detection</li>
+                                <li>📲 Automated SMS/WhatsApp Booking Confirmations</li>
+                                <li>🛠️ Admin Dashboard for booking & contact management</li>
+                                <li>🧾 Legal Pages: GDPR-compliant setup</li>
+                                <li>📱 QR Menu for contactless experience</li>
+                                <li>🧠 Backend Logic: Action/Loader control flow using Remix</li>
+                            </ul>
+                            <a href="https://franguinhodealbufeira.com/" class="project-link" target="_blank">Visit
+                                Website
+                                →</a>
+                        </div>
+
                     </div>
                 </div>
 
@@ -1497,7 +1507,7 @@
         </div>
     </section>
 
-      <!-- Modal for Image Popup -->
+    <!-- Modal for Image Popup -->
     <div id="imageModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeModal">&times;</button>
@@ -1580,104 +1590,115 @@
 
     <!-- custom curosr -->
     <script>
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        const trails = [];
-        const trailCount = 100;
 
-        // Create cursor trails
-        for (let i = 0; i < trailCount; i++) {
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            document.body.appendChild(trail);
-            trails.push({
-                element: trail,
-                x: 0,
-                y: 0
-            });
+        // Check if device is mobile
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                window.innerWidth <= 768 ||
+                ('ontouchstart' in window);
         }
+        if (!isMobileDevice()) {
 
-        let mouseX = 0, mouseY = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            // Custom Cursor
+            const cursor = document.querySelector('.cursor');
+            const trails = [];
+            const trailCount = 100;
 
-            cursor.style.left = mouseX - 10 + 'px';
-            cursor.style.top = mouseY - 10 + 'px';
-        });
-
-        // Animate cursor trails
-        function animateTrails() {
-            let x = mouseX;
-            let y = mouseY;
-
-            trails.forEach((trail, index) => {
-                trail.x += (x - trail.x) * (0.3 - index * 0.02);
-                trail.y += (y - trail.y) * (0.3 - index * 0.02);
-
-                trail.element.style.left = trail.x - 2 + 'px';
-                trail.element.style.top = trail.y - 2 + 'px';
-                trail.element.style.opacity = (trailCount - index) / trailCount * 0.5;
-
-                x = trail.x;
-                y = trail.y;
-            });
-
-            requestAnimationFrame(animateTrails);
-        }
-        animateTrails();
-
-        // Morphing text animation
-        const morphingTexts = ['Architect', 'Developer', 'Innovator', 'Creator', 'Visionary'];
-        let currentIndex = 0;
-        const morphingElement = document.querySelector('.morphing-text');
-
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % morphingTexts.length;
-            morphingElement.textContent = morphingTexts[currentIndex];
-        }, 2000);
-
-        // Smooth scrolling for navigation
-        document.querySelectorAll('.nav-item').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // Parallax effect for floating elements
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const floatingElements = document.querySelectorAll('.floating-element');
-
-            floatingElements.forEach((element, index) => {
-                const speed = 0.5 + (index * 0.1);
-                element.style.transform = `translateY(${scrollY * speed}px)`;
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver
-            ((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    } else {
-                        entry.target.classList.remove('visible');
-                    }
+            // Create cursor trails
+            for (let i = 0; i < trailCount; i++) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                document.body.appendChild(trail);
+                trails.push({
+                    element: trail,
+                    x: 0,
+                    y: 0
                 });
-            }, observerOptions);
-        document.querySelectorAll('.project-card, .hexagon-inner').forEach(element => {
-            observer.observe(element);
-        });
+            }
+
+            let mouseX = 0, mouseY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                cursor.style.left = mouseX - 10 + 'px';
+                cursor.style.top = mouseY - 10 + 'px';
+            });
+
+            // Animate cursor trails
+            function animateTrails() {
+                let x = mouseX;
+                let y = mouseY;
+
+                trails.forEach((trail, index) => {
+                    trail.x += (x - trail.x) * (0.3 - index * 0.02);
+                    trail.y += (y - trail.y) * (0.3 - index * 0.02);
+
+                    trail.element.style.left = trail.x - 2 + 'px';
+                    trail.element.style.top = trail.y - 2 + 'px';
+                    trail.element.style.opacity = (trailCount - index) / trailCount * 0.5;
+
+                    x = trail.x;
+                    y = trail.y;
+                });
+
+                requestAnimationFrame(animateTrails);
+            }
+            animateTrails();
+
+            // Morphing text animation
+            const morphingTexts = ['Architect', 'Developer', 'Innovator', 'Creator', 'Visionary'];
+            let currentIndex = 0;
+            const morphingElement = document.querySelector('.morphing-text');
+
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % morphingTexts.length;
+                morphingElement.textContent = morphingTexts[currentIndex];
+            }, 2000);
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Parallax effect for floating elements
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const floatingElements = document.querySelectorAll('.floating-element');
+
+                floatingElements.forEach((element, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    element.style.transform = `translateY(${scrollY * speed}px)`;
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver
+                ((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, observerOptions);
+            document.querySelectorAll('.project-card, .hexagon-inner').forEach(element => {
+                observer.observe(element);
+            });
+        }
     </script>
 
     <!-- visibility tracker -->
