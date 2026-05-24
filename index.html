@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nilankar — Shopify Architect</title>
+    <title>Developer</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
@@ -93,6 +93,11 @@
 
             body {
                 cursor: auto;
+                width: 100%;
+            }
+
+            .ab {
+                width: inherit
             }
         }
 
@@ -1289,6 +1294,115 @@
             transition-delay: .4s;
         }
     </style>
+
+    <style>
+        /* ════════════════════════════
+   DESKTOP — left, vertical center
+   ════════════════════════════ */
+        .wa-widget {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        .wa-widget a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            background: #fff;
+            color: #111;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-top: 1px solid #e5e5e5;
+            border-right: 1px solid #e5e5e5;
+            white-space: nowrap;
+            transition: background 0.15s, color 0.15s, padding-left 0.15s;
+        }
+
+        .wa-widget a:first-child {
+            border-top: 2px solid #25D366;
+        }
+
+        .wa-widget a:last-child {
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .wa-widget a:hover {
+            background: #25D366;
+            color: #fff;
+            padding-left: 22px;
+        }
+
+        .wa-widget a .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #25D366;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+
+        .wa-widget a:hover .dot {
+            background: #fff;
+        }
+
+        /* ════════════════════════════
+   MOBILE — top, horizontal fixed
+   ════════════════════════════ */
+        @media (max-width: 768px) {
+            #mobile-header {
+                width: 100vw;
+            }
+
+            .wa-widget {
+                position: fixed;
+                width: inherit;
+                bottom: 0;
+                top: auto;
+                left: 0;
+                right: 0;
+                transform: none;
+                flex-direction: row;
+                overflow-x: auto;
+                background: #fff;
+                border-top: 2px solid #25D366;
+                border-bottom: none;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            .wa-widget a {
+                flex: 1;
+                min-width: max-content;
+                justify-content: center;
+                border-top: none;
+                border-right: 1px solid #e5e5e5;
+                border-bottom: none;
+                padding: 11px 14px;
+                font-size: 12px;
+            }
+
+            .wa-widget a:first-child {
+                border-top: none;
+            }
+
+            .wa-widget a:last-child {
+                border-bottom: none;
+                border-right: none;
+            }
+
+            .wa-widget a:hover {
+                padding-left: 14px;
+            }
+
+
+        }
+    </style>
 </head>
 
 <body>
@@ -1311,11 +1425,14 @@
         <a href="#projects" class="nl">Projects</a>
         <a href="#contact" class="nl">Contact</a>
     </nav>
-
+    <div id="mobile-header">
+        <div class="wa-widget" id="wa-widget"></div>
+    </div>
     <!-- HERO -->
     <section id="home" class="hero sec">
         <div class="hero-in">
-            <div class="badge"><span class="bdot"></span>SHOPIFY CERTIFIED PARTNER · AVAILABLE FOR PROJECTS</div>
+            <div class="badge"><span class="bdot"></span>SHOPIFY CERTIFIED PARTNER · AVAILABLE FOR PROJECTS
+            </div>
             <h1 class="hname">NILANKAR</h1>
             <div class="hrole">
                 <span class="hrw">Shopify</span>
@@ -1323,7 +1440,8 @@
                 <span class="hrw">&amp;</span>
                 <span class="tw" id="tw">Full-Stack Dev</span>
             </div>
-            <p class="hdesc">Crafting exceptional e-commerce experiences with obsessive attention to detail. From custom
+            <p class="hdesc">Crafting exceptional e-commerce experiences with obsessive attention to detail.
+                From custom
                 Liquid themes to full-stack web apps — built to convert and built to last.</p>
             <div class="ctas">
                 <a href="#contact" class="btnp">START A PROJECT</a>
@@ -1449,7 +1567,8 @@
         <div class="skgrid">
             <div class="skc rv d1"><span class="skico">🛍️</span>
                 <div class="sknm">Shopify Plus</div>
-                <div class="skds">Advanced theme architecture, custom sections, Liquid templating & storefront API</div>
+                <div class="skds">Advanced theme architecture, custom sections, Liquid templating & storefront
+                    API</div>
                 <div class="skgl" style="background:#b8f0ff;"></div>
             </div>
             <div class="skc rv d2"><span class="skico">⚛️</span>
@@ -1464,12 +1583,14 @@
             </div>
             <div class="skc rv d4"><span class="skico">🎨</span>
                 <div class="sknm">Liquid Templating</div>
-                <div class="skds">Custom themes, metafields, dynamic sections & conditional rendering logic</div>
+                <div class="skds">Custom themes, metafields, dynamic sections & conditional rendering logic
+                </div>
                 <div class="skgl" style="background:#ffcef3;"></div>
             </div>
             <div class="skc rv d1"><span class="skico">📱</span>
                 <div class="sknm">Mobile-First Design</div>
-                <div class="skds">Pixel-perfect responsive design with accessibility & performance baked in</div>
+                <div class="skds">Pixel-perfect responsive design with accessibility & performance baked in
+                </div>
                 <div class="skgl" style="background:#ffe87a;"></div>
             </div>
             <div class="skc rv d2"><span class="skico">⚡</span>
@@ -1509,8 +1630,10 @@
                     </div><a href="https://franguinhodealbufeira.com/" target="_blank" class="parr">↗</a>
                 </div>
                 <h3 class="pnm">Franguinho De Albufeira</h3>
-                <p class="pds">A modern digital solution for a Portuguese churrasqueira. Mobile-friendly landing page,
-                    QR-based menu, smart reservation system with idle detection, automated SMS/WhatsApp confirmations,
+                <p class="pds">A modern digital solution for a Portuguese churrasqueira. Mobile-friendly landing
+                    page,
+                    QR-based menu, smart reservation system with idle detection, automated SMS/WhatsApp
+                    confirmations,
                     and a full admin dashboard.</p>
                 <div class="ptags"><span class="ptag">Remix</span><span class="ptag">Node.js</span><span
                         class="ptag">SMS/WhatsApp API</span><span class="ptag">QR Menu</span><span
@@ -1526,7 +1649,8 @@
                     </div><a href="https://www.churi.ca" target="_blank" class="parr">↗</a>
                 </div>
                 <h3 class="pnm">Churi</h3>
-                <p class="pds">Shopify store enhancements for a boutique Canadian handcrafted décor shop. Custom landing
+                <p class="pds">Shopify store enhancements for a boutique Canadian handcrafted décor shop. Custom
+                    landing
                     page design, bug fixes, SEO & performance optimization, Liquid metafields configuration and
                     conditional rendering.</p>
                 <div class="ptags"><span class="ptag">Shopify</span><span class="ptag">Liquid</span><span
@@ -1540,11 +1664,14 @@
                     </div><span class="parr" style="opacity:.25;pointer-events:none;">↗</span>
                 </div>
                 <h3 class="pnm">AwfullyGood</h3>
-                <p class="pds">Full Shopify store build for a U.S. mushroom supplement brand. Custom conversion-focused
-                    themes, payment & shipping integrations, DNS setup, A/B funnel optimizations and smart reusable
+                <p class="pds">Full Shopify store build for a U.S. mushroom supplement brand. Custom
+                    conversion-focused
+                    themes, payment & shipping integrations, DNS setup, A/B funnel optimizations and smart
+                    reusable
                     section blocks.</p>
-                <div class="ptags"><span class="ptag">Shopify Plus</span><span class="ptag">Custom Theme</span><span
-                        class="ptag">A/B Testing</span><span class="ptag">DNS</span><span class="ptag">Analytics</span>
+                <div class="ptags"><span class="ptag">Shopify Plus</span><span class="ptag">Custom
+                        Theme</span><span class="ptag">A/B Testing</span><span class="ptag">DNS</span><span
+                        class="ptag">Analytics</span>
                 </div>
             </div>
             <div class="pri rv d1">
@@ -1554,8 +1681,10 @@
                     </div><a href="https://pppsjehanabad.com" target="_blank" class="parr">↗</a>
                 </div>
                 <h3 class="pnm">PPPS School</h3>
-                <p class="pds">WordPress website for an educational institution. Full site build with admission forms,
-                    custom PHP plugin for form processing, email notifications, and a responsive, accessible mobile
+                <p class="pds">WordPress website for an educational institution. Full site build with admission
+                    forms,
+                    custom PHP plugin for form processing, email notifications, and a responsive, accessible
+                    mobile
                     layout.</p>
                 <div class="ptags"><span class="ptag">WordPress</span><span class="ptag">PHP</span><span
                         class="ptag">Custom Plugin</span><span class="ptag">Accessibility</span><span class="ptag">Email
@@ -1568,7 +1697,8 @@
                     </div><a href="https://www.androidp0rtugal.com" target="_blank" class="parr">↗</a>
                 </div>
                 <h3 class="pnm">Andoroid Portugal</h3>
-                <p class="pds">Shopify store improvements for a Portuguese tech accessories brand. Enhanced UI polish,
+                <p class="pds">Shopify store improvements for a Portuguese tech accessories brand. Enhanced UI
+                    polish,
                     improved navigation structure, ARIA accessibility labels, lazy loading and Liquid schema
                     simplifications.</p>
                 <div class="ptags"><span class="ptag">Shopify</span><span class="ptag">UI/UX</span><span
@@ -1582,10 +1712,11 @@
                 </div>
                 <h3 class="pnm">Malibu Market</h3>
                 <p class="pds">Shopify store upgrade for a retail brand. Implemented make-to-order logic for
-                    out-of-stock products using Liquid-based inventory conditions, ensuring clear messaging and a smooth
+                    out-of-stock products using Liquid-based inventory conditions, ensuring clear messaging and
+                    a smooth
                     purchase flow.</p>
-                <div class="ptags"><span class="ptag">Shopify</span><span class="ptag">Inventory Logic</span><span
-                        class="ptag">Make-to-Order</span><span class="ptag">UX</span></div>
+                <div class="ptags"><span class="ptag">Shopify</span><span class="ptag">Inventory
+                        Logic</span><span class="ptag">Make-to-Order</span><span class="ptag">UX</span></div>
             </div>
             <div class="pri rv">
                 <div class="pit">
@@ -1594,7 +1725,8 @@
                     </div><a href="https://udexports.com" target="_blank" class="parr">↗</a>
                 </div>
                 <h3 class="pnm">Unique Design / SteelPlus</h3>
-                <p class="pds">Wix-powered eCommerce site for an Indian organic exports business. Custom green-themed
+                <p class="pds">Wix-powered eCommerce site for an Indian organic exports business. Custom
+                    green-themed
                     branding, structured SEO-rich export catalogs, multi-language ready layout and performance
                     optimizations.</p>
                 <div class="ptags"><span class="ptag">Wix</span><span class="ptag">eCommerce</span><span
@@ -1609,7 +1741,8 @@
         <div class="ctgl"></div>
         <div class="rv">
             <h2 class="cttit">Let's Build<br>Something<br>Extraordinary</h2>
-            <p class="ctsub">Ready to transform your e-commerce vision into a high-converting reality? Let's talk.</p>
+            <p class="ctsub">Ready to transform your e-commerce vision into a high-converting reality? Let's
+                talk.</p>
             <div class="ctcards">
                 <a href="mailto:nilankar19@gmail.com" class="ctc"><span class="ctci">📧</span><span
                         class="ctcl">EMAIL</span><span class="ctcv">nilankar19@gmail.com</span></a>
@@ -1636,6 +1769,33 @@
         <img class="mimg" id="mimg" src="" alt="">
     </div>
 
+    <script>
+        /* ══ CONFIGURE ══════════════════════════════════
+           Your WhatsApp number in international format,
+           no + or spaces. Example: India +91 98765 43210
+           → "919876543210"
+        ════════════════════════════════════════════════ */
+        var WA_NUMBER = "918340606625";
+
+        var OPTIONS = [
+            { label: "Fix My Problem", msg: "Hi! I need help fixing a problem." },
+            { label: "Build My App", msg: "Hi! I want to build an app." },
+            { label: "Make It Work", msg: "Hi! I need help making something work." },
+            { label: "Improve My Business", msg: "Hi! I want to improve my business." },
+            { label: "Bring My Idea to Life", msg: "Hi! I have an idea to bring to life." },
+        ];
+
+        var widget = document.getElementById("wa-widget");
+
+        OPTIONS.forEach(function (opt) {
+            var a = document.createElement("a");
+            a.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(opt.msg);
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.innerHTML = '<span class="dot"></span>' + opt.label;
+            widget.appendChild(a);
+        });
+    </script>
     <script>
         /* CURSOR */
         const cur = document.getElementById('cur'), curR = document.getElementById('curR');
