@@ -8,6 +8,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+    <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
     <style>
         :root {
             --a1: #b8f0ff;
@@ -1351,55 +1352,6 @@
             transition-delay: .4s;
         }
     </style>
-
-    <!-- <style>
-        ── Preview shell (remove from portfolio) ──
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #04050f;
-            min-height: 100vh;
-            font-family: 'DM Sans', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(240, 244, 255, 0.55);
-            font-size: 13px;
-            letter-spacing: .04em;
-            font-family: 'Space Mono', monospace;
-        }
-
-        body::before {
-            content: 'HOVER LEFT EDGE TO EXPAND';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            letter-spacing: .2em;
-            color: rgba(184, 240, 255, 0.18);
-        }
-
-        /* Subtle aurora */
-        body::after {
-            content: '';
-            position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 60vw;
-            height: 60vh;
-            background: radial-gradient(ellipse, rgba(184, 240, 255, 0.06) 0%, transparent 65%);
-            pointer-events: none;
-        }
-    </style> -->
-
     <style>
         /* ── WA WIDGET — DESKTOP ONLY ─────────────────── */
         .wa {
@@ -1743,7 +1695,13 @@
         /* ── DESKTOP ONLY ───────────────────────────── */
         @media (max-width: 768px) {
             .wa {
-                display: none;
+                /* display: none; */
+                bottom: 0;
+                top: unset;
+                left: 0;
+                right: 0;
+                width: min-content;
+                transform: translateY(0);
             }
         }
     </style>
@@ -1811,14 +1769,14 @@
             </div>
             <h1 class="hname">NILANKAR</h1>
             <div class="hrole">
-                <span class="hrw">Shopify</span>
-                <span class="hrh">Architect</span>
-                <span class="hrw">&amp;</span>
-                <span class="tw" id="tw">Full-Stack Dev</span>
+                <span class="hrw">Trusted</span>
+                <span class="hrh">For</span>
+                <span class="hrw">|</span>
+                <span class="tw" id="tw">Digital Solutions</span>
             </div>
-            <p class="hdesc">Crafting exceptional e-commerce experiences with obsessive attention to detail.
-                From custom
-                Liquid themes to full-stack web apps — built to convert and built to last.</p>
+            <p class="hdesc">
+                Building modern web and AI-powered solutions that combine creativity, performance, and usability.
+            </p>
             <div class="ctas">
                 <a href="#contact" class="btnp">START A PROJECT</a>
                 <a href="#projects" class="btng">VIEW WORK</a>
@@ -1851,7 +1809,7 @@
 
     <!-- GALLERY 1 -->
 
-    <section class="gsec sec">
+    <!-- <section class="gsec sec">
         <div class="ghd rv">
             <div class="sl2">FEATURED WORK · STORE DESIGN</div>
             <h2 class="stit"
@@ -1874,6 +1832,78 @@
             <div class="gc2 rv d4"><img src="/assets/projects/4s.jpg" alt="Web Project 4" class="gi" data-m
                     loading="lazy">
                 <div class="gcl">WEB PROJECT · 04</div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- GALLERY 1 -->
+    <style>
+        /* Embla Setup */
+        .embla {
+            overflow: hidden;
+            width: 100%;
+            /* Adjust to fit layout boundaries */
+        }
+
+        .embla__viewport {
+            overflow: hidden;
+        }
+
+        .embla__container {
+            display: flex;
+            will-change: transform;
+        }
+
+        /* Slide setup using your original .gc2 sizing */
+        .embla__slide {
+            flex: 0 0 100%;
+            /* Standard 1 slide per view. Change to 50% for 2 slides, etc. */
+            min-width: 0;
+            /* Prevents images from pushing flex layout thresholds */
+        }
+    </style>
+    <section class="gsec sec">
+        <!-- Header remains unchanged -->
+        <div class="ghd rv">
+            <div class="sl2">FEATURED WORK · STORE DESIGN</div>
+            <h2 class="stit"
+                style="background:linear-gradient(135deg,#fff,#c4ffe8,#b8f0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                Ecommerce<br>Store
+            </h2>
+        </div>
+
+        <!-- Embla Root Wrapper -->
+        <div class="embla">
+            <!-- Embla Viewport (Handles Overflow) -->
+            <div class="embla__viewport">
+                <!-- Embla Container (gstrip modified into the flex container) -->
+                <div class="embla__container gstrip">
+
+                    <!-- Slide 01 -->
+                    <div class="embla__slide gc2 rv d1">
+                        <img src="/assets/projects/1s.jpg" alt="Web Project 1" class="gi" data-m loading="lazy">
+                        <div class="gcl">WEB PROJECT · 01</div>
+                    </div>
+
+                    <!-- Slide 02 -->
+                    <div class="embla__slide gc2 rv d2">
+                        <img src="/assets/projects/2s.jpg" alt="Web Project 2" class="gi" data-m loading="lazy">
+                        <div class="gcl">WEB PROJECT · 02</div>
+                    </div>
+
+                    <!-- Slide 03 -->
+                    <div class="embla__slide gc2 rv d3">
+                        <img src="/assets/projects/3s.jpg" alt="Web Project 3" class="gi" data-m loading="lazy">
+                        <div class="gcl">WEB PROJECT · 03</div>
+                    </div>
+
+                    <!-- Slide 04 -->
+                    <div class="embla__slide gc2 rv d4">
+                        <img src="/assets/projects/4s.jpg" alt="Web Project 4" class="gi" data-m loading="lazy">
+                        <div class="gcl">WEB PROJECT · 04</div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
@@ -2205,7 +2235,18 @@
         window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
 
         /* TYPEWRITER */
-        const words = ['Full-Stack Dev', 'Shopify Expert', 'Liquid Artist', 'Store Architect', 'UI Innovator'];
+        const words = [
+            'Simple Solutions',
+            'Modern Ideas',
+            'Creative Technology',
+            'Digital Experiences',
+            'Built with Care',
+            'Smart & Simple',
+            'Technology That Fits',
+            'Thoughtfully Made',
+            'Designed for Everyday Use',
+            'Modern Digital Work'
+        ];
         let wi = 0, ci = 0, del = false;
         const twEl = document.getElementById('tw');
         function type() {
@@ -2253,6 +2294,22 @@
         mcl.addEventListener('click', cm);
         modal.addEventListener('click', e => { if (e.target === modal) cm(); });
         document.addEventListener('keydown', e => { if (e.key === 'Escape') cm(); });
+    </script>
+    <script>
+        import EmblaCarousel from 'embla-carousel'
+
+        // Select the viewport node
+        const viewportNode = document.querySelector('.embla__viewport')
+
+        // Configure initialization options (e.g., loop, align)
+        const options = {
+            loop: true,
+            align: 'start'
+        }
+
+        // Initialize
+        const emblaApi = EmblaCarousel(viewportNode, options)
+
     </script>
 </body>
 
