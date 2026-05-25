@@ -1354,26 +1354,21 @@
     </style>
 
     <style>
-        /* ─── Section ─── */
         .gsec {
             padding: 80px 0 60px;
             position: relative;
-        }
-
-        .sec {
             width: 100%;
             overflow: hidden;
         }
 
-        /* ─── Section Header ─── */
+        .gsec+.gsec {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
         .ghd {
             padding: 0 48px 48px;
             max-width: 1400px;
             margin: 0 auto;
-        }
-
-        .rv {
-            /* reveal — add your animation here if needed */
         }
 
         .sl2 {
@@ -1391,80 +1386,103 @@
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #fff, #c4ffe8, #b8f0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
-        /* ─── Embla Carousel Wrapper ─── */
+        /* ── Embla structure ── */
         .gstrip {
-            position: relative;
             padding: 0 48px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Embla viewport */
+        /* Official Embla structure: .embla > .embla__viewport > .embla__container > .embla__slide */
         .embla {
-            overflow: hidden;
-            border-radius: 0;
+            position: relative;
         }
 
-        /* Embla container = flex row */
+        .embla__viewport {
+            overflow: hidden;
+        }
+
         .embla__container {
             display: flex;
             gap: 20px;
             align-items: stretch;
         }
 
-        /* ─── Each Card / Slide ─── */
-        .gc2 {
-            flex: 0 0 calc(25% - 15px);
-            /* 4 cards visible on desktop */
+        /* ── Slides / Cards ── */
+        .embla__slide {
+            flex: 0 0 calc(33% - 25px);
             min-width: 0;
             position: relative;
             border-radius: 16px;
             overflow: hidden;
             background: #111;
-            aspect-ratio: 3 / 4;
-            /* portrait card */
+            /* aspect-ratio: 3 / 4; */
             cursor: pointer;
             transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .gc2:hover {
+        .embla__slide:hover {
             transform: translateY(-6px) scale(1.015);
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
         }
 
-        /* ─── Image fills card perfectly ─── */
-        .gi {
+        /* ── Official lazy load classes ── */
+        .embla__lazy-load {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Spinner shown while loading */
+        .embla__lazy-load__spinner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            z-index: 1;
+        }
+
+        .embla__lazy-load__spinner::after {
+            content: '';
+            width: 28px;
+            height: 28px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #5fffb8;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Image — hidden until loaded */
+        .embla__lazy-load__img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             display: block;
-            transition: transform 0.5s ease, filter 0.4s ease;
-            /* lazy-load blur-up */
-            filter: blur(0px);
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.5s ease;
         }
 
-        .gi[data-src] {
-            filter: blur(12px);
-            transform: scale(1.04);
+        /* Once parent gets this class, show image & hide spinner */
+        .embla__lazy-load--has-loaded .embla__lazy-load__img {
+            opacity: 1;
         }
 
-        .gi.loaded {
-            filter: blur(0px);
+        /* .embla__slide:hover .embla__lazy-load__img {
             transform: scale(1);
-        }
+        } */
 
-        .gc2:hover .gi {
-            transform: scale(1.06);
-        }
-
-        /* ─── Card Label ─── */
+        /* ── Card label ── */
         .gcl {
             position: absolute;
             bottom: 0;
@@ -1478,26 +1496,10 @@
             color: rgba(255, 255, 255, 0.75);
             background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
             pointer-events: none;
+            z-index: 2;
         }
 
-        /* ─── Stagger animation hints ─── */
-        .d1 {
-            animation-delay: 0.05s;
-        }
-
-        .d2 {
-            animation-delay: 0.12s;
-        }
-
-        .d3 {
-            animation-delay: 0.19s;
-        }
-
-        .d4 {
-            animation-delay: 0.26s;
-        }
-
-        /* ─── Nav Buttons ─── */
+        /* ── Nav buttons ── */
         .embla__nav {
             display: flex;
             justify-content: flex-end;
@@ -1507,7 +1509,7 @@
             margin: 0 auto;
         }
 
-        .embla__btn {
+        .embla__button {
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -1521,19 +1523,19 @@
             backdrop-filter: blur(8px);
         }
 
-        .embla__btn:hover {
+        .embla__button:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.3);
             transform: scale(1.08);
         }
 
-        .embla__btn:disabled {
+        .embla__button:disabled {
             opacity: 0.3;
             cursor: default;
             transform: none;
         }
 
-        .embla__btn svg {
+        .embla__button svg {
             width: 18px;
             height: 18px;
             fill: none;
@@ -1543,7 +1545,7 @@
             stroke-linejoin: round;
         }
 
-        /* ─── Dot Pagination ─── */
+        /* ── Dots ── */
         .embla__dots {
             display: flex;
             justify-content: center;
@@ -1558,8 +1560,8 @@
             background: rgba(255, 255, 255, 0.25);
             border: none;
             cursor: pointer;
-            transition: background 0.25s, transform 0.25s, width 0.25s;
             padding: 0;
+            transition: background 0.25s, width 0.25s;
         }
 
         .embla__dot--selected {
@@ -1568,9 +1570,9 @@
             border-radius: 3px;
         }
 
-        /* ─── Responsive ─── */
+        /* ── Responsive ── */
         @media (max-width: 1024px) {
-            .gc2 {
+            .embla__slide {
                 flex: 0 0 calc(50% - 10px);
             }
         }
@@ -1584,7 +1586,7 @@
                 padding-right: 20px;
             }
 
-            .gc2 {
+            .embla__slide {
                 flex: 0 0 calc(80% - 10px);
             }
         }
@@ -2045,67 +2047,75 @@
     </div>
 
     <!-- GALLERY 1 -->
-    <!-- GALLERY 1 -->
-    <section class="gsec sec" data-carousel>
-        <div class="ghd rv">
+    <section class="gsec" data-carousel>
+        <div class="ghd">
             <div class="sl2">FEATURED WORK · STORE DESIGN</div>
-            <h2 class="stit">Ecommerce<br>Store</h2>
+            <h2 class="stit"
+                style="background:linear-gradient(135deg,#fff,#c4ffe8,#b8f0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                Ecommerce<br>Store</h2>
         </div>
 
-        <!-- Embla root -->
         <div class="gstrip">
             <div class="embla">
-                <div class="embla__container">
+                <div class="embla__viewport">
+                    <div class="embla__container">
 
-                    <div class="gc2 rv d1">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/1s.jpg" alt="Web Project 1" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 01</div>
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/1s.jpg" alt="Web Project 1">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 01</div>
+                        </div>
+
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/2s.jpg" alt="Web Project 2">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 02</div>
+                        </div>
+
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/3s.jpg" alt="Web Project 3">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 03</div>
+                        </div>
+
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/4s.jpg" alt="Web Project 4">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 04</div>
+                        </div>
+
                     </div>
-
-                    <div class="gc2 rv d2">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/2s.jpg" alt="Web Project 2" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 02</div>
-                    </div>
-
-                    <div class="gc2 rv d3">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/3s.jpg" alt="Web Project 3" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 03</div>
-                    </div>
-
-                    <div class="gc2 rv d4">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/4s.jpg" alt="Web Project 4" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 04</div>
-                    </div>
-
                 </div>
             </div>
         </div>
 
-        <!-- Nav -->
         <div class="embla__nav">
-            <button class="embla__btn" id="btn-prev" aria-label="Previous">
+            <button class="embla__button embla__button--prev" aria-label="Previous">
                 <svg viewBox="0 0 24 24">
                     <polyline points="15 18 9 12 15 6" />
                 </svg>
             </button>
-            <button class="embla__btn" id="btn-next" aria-label="Next">
+            <button class="embla__button embla__button--next" aria-label="Next">
                 <svg viewBox="0 0 24 24">
                     <polyline points="9 18 15 12 9 6" />
                 </svg>
             </button>
         </div>
-
-        <!-- Dots -->
-        <div class="embla__dots" id="embla-dots"></div>
+        <div class="embla__dots"></div>
     </section>
+
 
 
     <!-- LAPTOP -->
@@ -2134,91 +2144,73 @@
 
     <!-- GALLERY 2 -->
 
-    <!-- <section id="gallery" class="gsec sec">
-        <div class="ghd rv">
-            <div class="sl2">FEATURED WORK · Websites</div>
-            <h2 class="stit"
-                style="background:linear-gradient(135deg,#fff,#b8f0ff,#e0b4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
-                Websites<br>Gallery</h2>
-        </div>
-        <div class="gstrip">
-            <div class="gc2 rv d1"><img src="/assets/projects/1f.jpg" alt="Shopify Store 1" class="gi" data-m
-                    loading="lazy">
-                <div class="gcl">Website · 01</div>
-            </div>
-            <div class="gc2 rv d2"><img src="/assets/projects/2f.jpg" alt="Shopify Store 2" class="gi" data-m
-                    loading="lazy">
-                <div class="gcl">Website · 02</div>
-            </div>
-            <div class="gc2 rv d3"><img src="/assets/projects/3f.jpg" alt="Shopify Store 3" class="gi" data-m
-                    loading="lazy">
-                <div class="gcl">Website · 03</div>
-            </div>
-            <div class="gc2 rv d4"><img src="/assets/projects/4f.jpg" alt="Shopify Store 4" class="gi" data-m
-                    loading="lazy">
-                <div class="gcl">Website · 04</div>
-            </div>
-        </div>
-    </section> -->
-    <section class="gsec sec" data-carousel>
-        <div class="ghd rv">
+    <section class="gsec" data-carousel>
+        <div class="ghd">
             <div class="sl2">FEATURED WORK · STORE DESIGN</div>
-            <h2 class="stit">Ecommerce<br>Store</h2>
+            <h2 class="stit"
+                style="background:linear-gradient(135deg,#fff,#c4ffe8,#b8f0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                Ecommerce<br>Store</h2>
         </div>
 
-        <!-- Embla root -->
         <div class="gstrip">
             <div class="embla">
-                <div class="embla__container">
+                <div class="embla__viewport">
+                    <div class="embla__container">
 
-                    <div class="gc2 rv d1">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/1f.jpg" alt="Web Project 1" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 01</div>
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/1f.jpg" alt="Web Project 1">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 01</div>
+                        </div>
+
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/2f.jpg" alt="Web Project 2">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 02</div>
+                        </div>
+
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/3f.jpg" alt="Web Project 3">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 03</div>
+                        </div>
+
+                        <div class="embla__slide">
+                            <div class="embla__lazy-load">
+                                <div class="embla__lazy-load__spinner"></div>
+                                <img class="embla__lazy-load__img"
+                                    data-src="https://nilankar19.github.io/assets/projects/4f.jpg" alt="Web Project 4">
+                            </div>
+                            <div class="gcl">WEB PROJECT · 04</div>
+                        </div>
+
                     </div>
-
-                    <div class="gc2 rv d2">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/2f.jpg" alt="Web Project 2" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 02</div>
-                    </div>
-
-                    <div class="gc2 rv d3">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/3f.jpg" alt="Web Project 3" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 03</div>
-                    </div>
-
-                    <div class="gc2 rv d4">
-                        <img class="gi"
-                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                            data-src="/assets/projects/4f.jpg" alt="Web Project 4" data-m loading="lazy">
-                        <div class="gcl">WEB PROJECT · 04</div>
-                    </div>
-
                 </div>
             </div>
         </div>
 
-        <!-- Nav -->
         <div class="embla__nav">
-            <button class="embla__btn" id="btn-prev" aria-label="Previous">
+            <button class="embla__button embla__button--prev" aria-label="Previous">
                 <svg viewBox="0 0 24 24">
                     <polyline points="15 18 9 12 15 6" />
                 </svg>
             </button>
-            <button class="embla__btn" id="btn-next" aria-label="Next">
+            <button class="embla__button embla__button--next" aria-label="Next">
                 <svg viewBox="0 0 24 24">
                     <polyline points="9 18 15 12 9 6" />
                 </svg>
             </button>
         </div>
-
-        <!-- Dots -->
-        <div class="embla__dots" id="embla-dots"></div>
+        <div class="embla__dots"></div>
     </section>
 
 
@@ -2559,84 +2551,141 @@
     <!-- Embla JS from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/embla-carousel/8.3.0/embla-carousel.umd.min.js"></script>
     <script>
-        function initCarousel(section) {
-            /* 1. Scope every element query to this section */
-            const viewport = section.querySelector('.embla');
-            const btnPrev = section.querySelector('.embla__btn--prev');
-            const btnNext = section.querySelector('.embla__btn--next');
-            const dotsWrap = section.querySelector('.embla__dots');
 
-            /* 2. Init Embla on THIS viewport only */
-            const embla = EmblaCarousel(viewport, {
-                loop: false,
-                align: 'start',
-                dragFree: false,
-                slidesToScroll: 1,
-            });
+        /* ─────────────────────────────────────────────────
+           Official Embla lazy load — ported from docs
+           setupLazyLoadImage(emblaApi) → handler fn
+        ───────────────────────────────────────────────── */
+        function setupLazyLoadImage(emblaApi) {
+            const imagesInView = []
+            const slideNodes = emblaApi.slideNodes()
 
+            const spinnerNodes = slideNodes.map(slide =>
+                slide.querySelector('.embla__lazy-load__spinner')
+            )
+            const imageNodes = slideNodes.map(slide =>
+                slide.querySelector('.embla__lazy-load__img')
+            )
 
-            /* 3. Buttons */
-            btnPrev.addEventListener('click', () => embla.scrollPrev());
-            btnNext.addEventListener('click', () => embla.scrollNext());
+            function loadImageInView(index) {
+                const imageNode = imageNodes[index]
+                const slideNode = slideNodes[index]
+                const spinnerNode = spinnerNodes[index]
+                const src = imageNode.getAttribute('data-src')
 
-            function updateButtons() {
-                btnPrev.disabled = !embla.canScrollPrev();
-                btnNext.disabled = !embla.canScrollNext();
+                imageNode.src = src
+                imagesInView.push(index)
+
+                function onLoad() {
+                    slideNode.classList.add('embla__lazy-load--has-loaded')
+                    if (spinnerNode && spinnerNode.parentElement) {
+                        spinnerNode.parentElement.removeChild(spinnerNode)
+                    }
+                    imageNode.removeEventListener('load', onLoad)
+                }
+                imageNode.addEventListener('load', onLoad)
             }
 
-            embla.on('select', updateButtons);
-            embla.on('init', updateButtons);
+            function loadImagesInView() {
+                emblaApi
+                    .slidesInView()
+                    .filter(index => !imagesInView.includes(index))
+                    .forEach(loadImageInView)
 
-            /* 4. Dots */
-            const slideCount = embla.slideNodes().length;
-
-            const dots = Array.from({ length: slideCount }, (_, i) => {
-                const b = document.createElement('button');
-                b.className = 'embla__dot';
-                b.setAttribute('aria-label', `Go to slide ${i + 1}`);
-                b.addEventListener('click', () => embla.scrollTo(i));
-                dotsWrap.appendChild(b);
-                return b;
-            });
-
-            function updateDots() {
-                const idx = embla.selectedScrollSnap();
-                dots.forEach((d, i) =>
-                    d.classList.toggle('embla__dot--selected', i === idx)
-                );
+                return imagesInView.length === imageNodes.length
             }
 
-            embla.on('select', updateDots);
-            embla.on('init', updateDots);
-
-            /* 5. Lazy load — scoped to THIS section's images */
-            const lazyImgs = section.querySelectorAll('img[data-src]');
-
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (!entry.isIntersecting) return;
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                        img.addEventListener('load', () => img.classList.add('loaded'));
-                        img.addEventListener('error', () => img.classList.add('loaded'));
-                        io.unobserve(img);
-                    });
-                }, { rootMargin: '200px 0px' });
-
-                lazyImgs.forEach(img => io.observe(img));
-            } else {
-                lazyImgs.forEach(img => {
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                });
+            // Returns the handler Embla will call on events
+            function loadImagesInViewAndDestroyIfDone(eventPayload) {
+                const hasLoadedAll = loadImagesInView()
+                if (hasLoadedAll && eventPayload) {
+                    // All loaded — unsubscribe both listeners
+                    emblaApi.off('reinit', loadImagesInViewAndDestroyIfDone)
+                    emblaApi.off('slidesInView', loadImagesInViewAndDestroyIfDone)
+                }
             }
+
+            return loadImagesInViewAndDestroyIfDone
         }
 
-        /* ── Boot: init every [data-carousel] section independently ── */
-        document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
+        /* ─────────────────────────────────────────────────
+           Arrow buttons
+        ───────────────────────────────────────────────── */
+        function setupArrowButtons(emblaApi, prevBtn, nextBtn) {
+            function updateDisabled() {
+                prevBtn.disabled = !emblaApi.canScrollPrev()
+                nextBtn.disabled = !emblaApi.canScrollNext()
+            }
+            prevBtn.addEventListener('click', () => emblaApi.scrollPrev())
+            nextBtn.addEventListener('click', () => emblaApi.scrollNext())
+            emblaApi.on('select', updateDisabled)
+            emblaApi.on('init', updateDisabled)
+            emblaApi.on('reinit', updateDisabled)
+        }
+
+
+        /* ─────────────────────────────────────────────────
+           Dot buttons
+        ───────────────────────────────────────────────── */
+        function setupDotButtons(emblaApi, dotsNode) {
+            const slideCount = emblaApi.slideNodes().length
+            const dots = []
+
+            for (let i = 0; i < slideCount; i++) {
+                const btn = document.createElement('button')
+                btn.className = 'embla__dot'
+                btn.setAttribute('aria-label', `Go to slide ${i + 1}`)
+                btn.addEventListener('click', () => emblaApi.scrollTo(i))
+                dotsNode.appendChild(btn)
+                dots.push(btn)
+            }
+
+            function updateDots() {
+                const selected = emblaApi.selectedScrollSnap()
+                dots.forEach((dot, i) =>
+                    dot.classList.toggle('embla__dot--selected', i === selected)
+                )
+            }
+
+            emblaApi.on('select', updateDots)
+            emblaApi.on('init', updateDots)
+            emblaApi.on('reinit', updateDots)
+        }
+
+
+        /* ─────────────────────────────────────────────────
+           initCarousel(sectionEl)
+           Scoped to each [data-carousel] section
+        ───────────────────────────────────────────────── */
+        function initCarousel(section) {
+            const viewportNode = section.querySelector('.embla__viewport')
+            const prevBtn = section.querySelector('.embla__button--prev')
+            const nextBtn = section.querySelector('.embla__button--next')
+            const dotsNode = section.querySelector('.embla__dots')
+
+            const emblaApi = EmblaCarousel(viewportNode, {
+                loop: false,
+                align: 'start',
+                slidesToScroll: 1,
+            })
+
+            // Official lazy load wired exactly as in the docs:
+            const loadImagesInView = setupLazyLoadImage(emblaApi)
+            emblaApi
+                .on('reinit', loadImagesInView)
+                .on('slidesInView', loadImagesInView)
+
+            // Fire once immediately for slides already in view on init
+            emblaApi.on('init', loadImagesInView)
+
+            setupArrowButtons(emblaApi, prevBtn, nextBtn)
+            setupDotButtons(emblaApi, dotsNode)
+        }
+
+
+        /* ── Boot all carousels ── */
+        document.querySelectorAll('[data-carousel]').forEach(initCarousel)
     </script>
 </body>
 
