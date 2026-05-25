@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer</title>
+    <title>Nilankar — Shopify Architect</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
@@ -52,6 +52,7 @@
             overflow-x: hidden;
             cursor: none;
             -webkit-font-smoothing: antialiased;
+            overscroll-behavior-y: none;
         }
 
         ::selection {
@@ -94,6 +95,8 @@
             body {
                 cursor: auto;
                 width: 100%;
+                padding-bottom: 56px;
+                /* clear the fixed WA bar */
             }
 
             .ab {
@@ -107,6 +110,8 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
+            will-change: contents;
+            transform: translateZ(0);
         }
 
         /* AURORA */
@@ -116,6 +121,7 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
+            contain: strict;
         }
 
         .abl {
@@ -124,6 +130,15 @@
             filter: blur(120px);
             opacity: 0.16;
             animation: afl linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        @media (max-width: 768px) {
+            .abl {
+                filter: blur(60px);
+                opacity: 0.12;
+            }
         }
 
         .ab1 {
@@ -212,6 +227,13 @@
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
             transition: box-shadow .3s;
             max-width: calc(100vw - 24px);
+            contain: layout style;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                backdrop-filter: blur(20px) saturate(140%);
+            }
         }
 
         nav:hover {
@@ -537,6 +559,15 @@
             z-index: 2;
         }
 
+        .gsec,
+        .sksec,
+        .prsec,
+        .ctsec,
+        .lsec {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 600px;
+        }
+
         .sl2 {
             display: inline-flex;
             align-items: center;
@@ -655,6 +686,9 @@
             scroll-snap-type: x mandatory;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            touch-action: pan-x;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
         }
 
         .gstrip::-webkit-scrollbar {
@@ -678,6 +712,27 @@
             border: 1px solid var(--bdr);
             cursor: none;
             transition: transform .5s var(--es), box-shadow .5s;
+            will-change: transform;
+            touch-action: pan-x;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .abl,
+            .rv,
+            .gc2,
+            .skc,
+            .pri,
+            .btnp,
+            .btng {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .rv {
+                opacity: 1;
+                transform: none;
+            }
         }
 
         .gc2::before {
@@ -1271,11 +1326,13 @@
             opacity: 0;
             transform: translateY(38px);
             transition: opacity .8s var(--eo), transform .8s var(--eo);
+            will-change: opacity, transform;
         }
 
         .rv.vis {
             opacity: 1;
             transform: translateY(0);
+            will-change: auto;
         }
 
         .d1 {
@@ -1295,112 +1352,399 @@
         }
     </style>
 
+    <!-- <style>
+        ── Preview shell (remove from portfolio) ──
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #04050f;
+            min-height: 100vh;
+            font-family: 'DM Sans', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(240, 244, 255, 0.55);
+            font-size: 13px;
+            letter-spacing: .04em;
+            font-family: 'Space Mono', monospace;
+        }
+
+        body::before {
+            content: 'HOVER LEFT EDGE TO EXPAND';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            color: rgba(184, 240, 255, 0.18);
+        }
+
+        /* Subtle aurora */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 60vw;
+            height: 60vh;
+            background: radial-gradient(ellipse, rgba(184, 240, 255, 0.06) 0%, transparent 65%);
+            pointer-events: none;
+        }
+    </style> -->
+
     <style>
-        /* ════════════════════════════
-   DESKTOP — left, vertical center
-   ════════════════════════════ */
-        .wa-widget {
+        /* ── WA WIDGET — DESKTOP ONLY ─────────────────── */
+        .wa {
             position: fixed;
             left: 0;
             top: 50%;
             transform: translateY(-50%);
+            z-index: 9999;
+            display: flex;
+            align-items: stretch;
+            cursor: default;
+            /* CSS fallbacks if portfolio vars not present */
+            --_a1: var(--a1, #b8f0ff);
+            --_a2: var(--a2, #e0b4ff);
+            --_gc: var(--gc, #7dfff4);
+            --_bg: rgba(5, 7, 18, 0.94);
+            --_bd: rgba(184, 240, 255, 0.12);
+            --_txt: rgba(240, 244, 255, 0.88);
+            --_txtd: rgba(240, 244, 255, 0.42);
+            --_gr: #25D366;
+            --_ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ── COLLAPSED TAB ──────────────────────────── */
+        .wa-tab {
+            width: 36px;
+            min-height: 180px;
+            background: var(--_bg);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1px solid var(--_bd);
+            border-left: none;
+            border-radius: 0 14px 14px 0;
             display: flex;
             flex-direction: column;
-            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+            transition: border-color .35s, border-radius .35s var(--_ease), width .35s var(--_ease);
+            /* glowing right edge */
+            box-shadow: 2px 0 0 0 rgba(184, 240, 255, 0.0),
+                inset -1px 0 12px rgba(184, 240, 255, 0.04);
+            overflow: hidden;
         }
 
-        .wa-widget a {
+        /* gradient top stripe */
+        .wa-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--_a1), var(--_a2), transparent);
+            opacity: .6;
+            border-radius: 0 14px 0 0;
+            transition: opacity .3s;
+        }
+
+        /* right edge accent glow */
+        .wa-tab::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            right: 0;
+            width: 1px;
+            height: 70%;
+            background: linear-gradient(180deg, transparent, var(--_a1), var(--_a2), transparent);
+            opacity: .35;
+            transition: opacity .3s;
+        }
+
+        .wa:hover .wa-tab {
+            border-color: rgba(184, 240, 255, 0.22);
+            border-radius: 0;
+            width: 36px;
+            box-shadow: inset -1px 0 20px rgba(184, 240, 255, 0.06);
+        }
+
+        .wa:hover .wa-tab::after {
+            opacity: .65;
+        }
+
+        .wa:hover .wa-tab::before {
+            opacity: 1;
+        }
+
+        /* availability dot */
+        .wa-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--_gr);
+            box-shadow: 0 0 8px var(--_gr), 0 0 3px var(--_gr);
+            animation: wa-pulse 2.4s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes wa-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .35;
+                transform: scale(.55);
+            }
+        }
+
+        /* rotated label */
+        .wa-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-family: 'Space Mono', monospace;
+            font-size: 7.5px;
+            letter-spacing: .22em;
+            color: var(--_txtd);
+            user-select: none;
+            transition: color .3s, letter-spacing .3s;
+        }
+
+        .wa:hover .wa-label {
+            color: rgba(184, 240, 255, .65);
+            letter-spacing: .28em;
+        }
+
+        /* small WA icon */
+        .wa-ico {
+            width: 15px;
+            height: 15px;
+            opacity: .28;
+            transition: opacity .3s;
+            flex-shrink: 0;
+            fill: var(--_a1);
+        }
+
+        .wa:hover .wa-ico {
+            opacity: .6;
+        }
+
+        /* ── EXPAND PANEL ───────────────────────────── */
+        .wa-panel {
+            width: 0;
+            overflow: hidden;
+            transition: width .42s var(--_ease);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .wa:hover .wa-panel {
+            width: 252px;
+        }
+
+        .wa-inner {
+            width: 252px;
+            flex-shrink: 0;
+            background: var(--_bg);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1px solid var(--_bd);
+            border-left: none;
+            border-radius: 0 16px 16px 0;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity .28s .08s, transform .38s .04s var(--_ease);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wa:hover .wa-inner {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        /* inner top glow bar */
+        .wa-inner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--_a1), var(--_a2), transparent);
+            opacity: .45;
+        }
+
+        /* ── PANEL HEADER ───────────────────────────── */
+        .wa-head {
+            padding: 16px 18px 13px;
+            border-bottom: 1px solid rgba(184, 240, 255, .07);
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 11px 16px;
-            background: #fff;
-            color: #111;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            border-top: 1px solid #e5e5e5;
-            border-right: 1px solid #e5e5e5;
-            white-space: nowrap;
-            transition: background 0.15s, color 0.15s, padding-left 0.15s;
+            gap: 8px;
         }
 
-        .wa-widget a:first-child {
-            border-top: 2px solid #25D366;
-        }
-
-        .wa-widget a:last-child {
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .wa-widget a:hover {
-            background: #25D366;
-            color: #fff;
-            padding-left: 22px;
-        }
-
-        .wa-widget a .dot {
-            width: 7px;
-            height: 7px;
+        .wa-head-dot {
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
-            background: #25D366;
+            background: var(--_gr);
+            box-shadow: 0 0 5px var(--_gr);
             flex-shrink: 0;
-            transition: background 0.15s;
+            animation: wa-pulse 2.4s ease-in-out infinite;
         }
 
-        .wa-widget a:hover .dot {
-            background: #fff;
+        .wa-head-txt {
+            font-family: 'Space Mono', monospace;
+            font-size: 8.5px;
+            letter-spacing: .18em;
+            color: var(--_txtd);
+            flex: 1;
         }
 
-        /* ════════════════════════════
-   MOBILE — top, horizontal fixed
-   ════════════════════════════ */
+        .wa-head-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 7px;
+            letter-spacing: .1em;
+            color: var(--_gr);
+            background: rgba(37, 211, 102, .08);
+            border: 1px solid rgba(37, 211, 102, .2);
+            border-radius: 100px;
+            padding: 2px 7px;
+        }
+
+        /* ── OPTION LINKS ───────────────────────────── */
+        .wa-inner a {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 11px 18px;
+            color: var(--_txt);
+            text-decoration: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12.5px;
+            font-weight: 400;
+            line-height: 1;
+            position: relative;
+            transition: color .2s, padding-left .22s var(--_ease);
+            cursor: none;
+        }
+
+        /* hover fill */
+        .wa-inner a::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                    rgba(184, 240, 255, .055) 0%,
+                    rgba(224, 180, 255, .03) 60%,
+                    transparent 100%);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .wa-inner a:hover {
+            padding-left: 24px;
+            color: #f0f4ff;
+        }
+
+        .wa-inner a:hover::after {
+            opacity: 1;
+        }
+
+        .wa-inner a .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(37, 211, 102, .55);
+            flex-shrink: 0;
+            transition: background .2s, box-shadow .2s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wa-inner a:hover .dot {
+            background: var(--_gr);
+            box-shadow: 0 0 7px var(--_gr);
+        }
+
+        .wa-inner a span.lbl {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* arrow */
+        .wa-inner a .arr {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--_txtd);
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity .2s, transform .22s var(--_ease);
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .wa-inner a:hover .arr {
+            opacity: .6;
+            transform: translateX(0);
+        }
+
+        /* divider between options */
+        .wa-inner a+a {
+            border-top: 1px solid rgba(255, 255, 255, .04);
+        }
+
+        /* ── PANEL FOOTER ───────────────────────────── */
+        .wa-foot {
+            margin-top: auto;
+            padding: 10px 18px 14px;
+            border-top: 1px solid rgba(184, 240, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .wa-foot svg {
+            flex-shrink: 0;
+            opacity: .3;
+        }
+
+        .wa-foot span {
+            font-family: 'Space Mono', monospace;
+            font-size: 7.5px;
+            letter-spacing: .12em;
+            color: rgba(240, 244, 255, .22);
+        }
+
+        /* ── DESKTOP ONLY ───────────────────────────── */
         @media (max-width: 768px) {
-            #mobile-header {
-                width: 100vw;
+            .wa {
+                display: none;
             }
-
-            .wa-widget {
-                position: fixed;
-                width: inherit;
-                bottom: 0;
-                top: auto;
-                left: 0;
-                right: 0;
-                transform: none;
-                flex-direction: row;
-                overflow-x: auto;
-                background: #fff;
-                border-top: 2px solid #25D366;
-                border-bottom: none;
-                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
-            }
-
-            .wa-widget a {
-                flex: 1;
-                min-width: max-content;
-                justify-content: center;
-                border-top: none;
-                border-right: 1px solid #e5e5e5;
-                border-bottom: none;
-                padding: 11px 14px;
-                font-size: 12px;
-            }
-
-            .wa-widget a:first-child {
-                border-top: none;
-            }
-
-            .wa-widget a:last-child {
-                border-bottom: none;
-                border-right: none;
-            }
-
-            .wa-widget a:hover {
-                padding-left: 14px;
-            }
-
-
         }
     </style>
 </head>
@@ -1426,7 +1770,39 @@
         <a href="#contact" class="nl">Contact</a>
     </nav>
     <div id="mobile-header">
-        <div class="wa-widget" id="wa-widget"></div>
+
+
+        <div class="wa" id="wa-widget">
+            <!-- collapsed tab (always visible) -->
+            <div class="wa-tab">
+                <div class="wa-dot"></div>
+                <span class="wa-label">CHAT</span>
+                <svg class="wa-ico" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.94-.875A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
+                </svg>
+            </div>
+
+            <!-- expandable panel -->
+            <div class="wa-panel">
+                <div class="wa-inner">
+                    <div class="wa-head">
+                        <div class="wa-head-dot"></div>
+                        <span class="wa-head-txt">START A CONVERSATION</span>
+                        <span class="wa-head-badge">ONLINE</span>
+                    </div>
+                    <!-- options injected by JS -->
+                    <div class="wa-foot">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366">
+                            <path
+                                d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.94-.875A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
+                        </svg>
+                        <span>VIA WHATSAPP · NILANKAR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- HERO -->
     <section id="home" class="hero sec">
@@ -1769,14 +2145,9 @@
         <img class="mimg" id="mimg" src="" alt="">
     </div>
 
-    <script>
-        /* ══ CONFIGURE ══════════════════════════════════
-           Your WhatsApp number in international format,
-           no + or spaces. Example: India +91 98765 43210
-           → "919876543210"
-        ════════════════════════════════════════════════ */
-        var WA_NUMBER = "918340606625";
 
+    <script>
+        var WA_NUMBER = "918340606625";
         var OPTIONS = [
             { label: "Fix My Problem", msg: "Hi! I need help fixing a problem." },
             { label: "Build My App", msg: "Hi! I want to build an app." },
@@ -1785,15 +2156,19 @@
             { label: "Bring My Idea to Life", msg: "Hi! I have an idea to bring to life." },
         ];
 
-        var widget = document.getElementById("wa-widget");
+        var inner = document.querySelector(".wa-inner");
+        var foot = document.querySelector(".wa-foot");
 
         OPTIONS.forEach(function (opt) {
             var a = document.createElement("a");
             a.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(opt.msg);
             a.target = "_blank";
             a.rel = "noopener noreferrer";
-            a.innerHTML = '<span class="dot"></span>' + opt.label;
-            widget.appendChild(a);
+            a.innerHTML =
+                '<span class="dot"></span>' +
+                '<span class="lbl">' + opt.label + '</span>' +
+                '<span class="arr">↗</span>';
+            inner.insertBefore(a, foot);
         });
     </script>
     <script>
@@ -1809,11 +2184,14 @@
 
         /* STARFIELD */
         const canvas = document.getElementById('sf'), ctx = canvas.getContext('2d');
-        let stars = [];
+        let stars = [], rafId;
         const sc = ['rgba(184,240,255,', 'rgba(224,180,255,', 'rgba(255,206,243,', 'rgba(255,255,255,', 'rgba(196,255,232,'];
+        const isMobile = window.innerWidth <= 768;
+        const STAR_COUNT = isMobile ? 80 : 200;
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        function init() { stars = Array.from({ length: 200 }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.1 + .2, o: Math.random() * .65 + .1, s: Math.random() * .35 + .08, c: sc[Math.floor(Math.random() * sc.length)] })); }
+        function init() { stars = Array.from({ length: STAR_COUNT }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.1 + .2, o: Math.random() * .65 + .1, s: Math.random() * .35 + .08, c: sc[Math.floor(Math.random() * sc.length)] })); }
         function draw() {
+            if (document.hidden) { rafId = requestAnimationFrame(draw); return; }
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const t = Date.now() * .001;
             stars.forEach(s => {
@@ -1821,10 +2199,10 @@
                 ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
                 ctx.fillStyle = s.c + op + ')'; ctx.fill();
             });
-            requestAnimationFrame(draw);
+            rafId = requestAnimationFrame(draw);
         }
         resize(); init(); draw();
-        window.addEventListener('resize', () => { resize(); init(); });
+        window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
 
         /* TYPEWRITER */
         const words = ['Full-Stack Dev', 'Shopify Expert', 'Liquid Artist', 'Store Architect', 'UI Innovator'];
@@ -1852,12 +2230,13 @@
 
         /* LAPTOP PARALLAX */
         const ls = document.getElementById('ls');
-        window.addEventListener('mousemove', e => {
-            if (!ls) return;
-            const rx2 = (e.clientY / window.innerHeight - .5) * 8;
-            const ry2 = (e.clientX / window.innerWidth - .5) * -8;
-            ls.style.transform = `rotateX(${rx2}deg) rotateY(${ry2}deg)`;
-        });
+        if (ls && !isMobile) {
+            window.addEventListener('mousemove', e => {
+                const rx2 = (e.clientY / window.innerHeight - .5) * 8;
+                const ry2 = (e.clientX / window.innerWidth - .5) * -8;
+                ls.style.transform = `rotateX(${rx2}deg) rotateY(${ry2}deg)`;
+            }, { passive: true });
+        }
 
         /* MODAL */
         const modal = document.getElementById('modal'), mimg = document.getElementById('mimg'), mcl = document.getElementById('mcl');
